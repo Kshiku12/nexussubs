@@ -210,7 +210,7 @@ export default function Chatbot() {
        alert(`Simulating OFFICIAL cancellation for: ${action.data.services.join(", ")}\nA confirmation SMS/Email has been sent to your registered contacts.`);
     } else if (action.type === "recommend_media") {
        const rawItems = action.data.items || [];
-       const items = Array.from(new Map(rawItems.map((item: any) => [item.title.toLowerCase(), item])).values());
+       const items: any[] = Array.from(new Map(rawItems.map((item: any) => [item.title.toLowerCase(), item])).values());
        
        setShowRecPopup(true);
        setIsFetchingRecs(true);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
@@ -8,6 +8,14 @@ import { Search, Star, Clapperboard, Gamepad2, Settings, X, Tv, ArrowLeft } from
 import { MediaType, MediaItem, mockMovies, mockGames, searchMockData } from "@/lib/mockDatabase";
 
 export default function ExplorePage() {
+  return (
+    <Suspense fallback={<div className={styles.loadingState}><div className={styles.spin}><Settings size={40} /></div><h3>Loading...</h3></div>}>
+      <ExploreContent />
+    </Suspense>
+  );
+}
+
+function ExploreContent() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("q") || "";
   
