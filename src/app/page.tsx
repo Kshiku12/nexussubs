@@ -1,66 +1,27 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Link from "next/link";
+import { ArrowRight, Gamepad2, Tv2 } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px", textAlign: "center" }}>
+      <div className="glass-card animate-fade-in" style={{ maxWidth: "800px", padding: "64px" }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: "24px", marginBottom: "32px" }}>
+          <Tv2 size={64} color="var(--accent-primary)" style={{ filter: "drop-shadow(0 0 15px var(--accent-primary))" }} />
+          <Gamepad2 size={64} color="var(--accent-secondary)" style={{ filter: "drop-shadow(0 0 15px var(--accent-secondary))" }} />
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        
+        <h1 style={{ fontSize: "4rem", fontWeight: 900, marginBottom: "24px", background: "linear-gradient(135deg, var(--text-primary), var(--text-secondary))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          Control Your <span style={{ background: "linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Digital Life</span>
+        </h1>
+        
+        <p style={{ fontSize: "1.2rem", color: "var(--text-secondary)", marginBottom: "48px", maxWidth: "600px", margin: "0 auto 48px auto", lineHeight: 1.6 }}>
+          NexusSubs automatically scans your email to track, manage, and optimize all your OTT and Gaming subscriptions in one beautiful dashboard. No manual entry required.
+        </p>
+
+        <Link href="/login" className="btn-primary" style={{ padding: "16px 32px", fontSize: "1.2rem" }}>
+          Get Started <ArrowRight size={20} />
+        </Link>
+      </div>
+    </main>
   );
 }
