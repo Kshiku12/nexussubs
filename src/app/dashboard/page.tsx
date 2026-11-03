@@ -8,6 +8,7 @@ import Script from "next/script";
 import styles from "./page.module.css";
 import extrasStyles from "./extras.module.css";
 import { SubscriptionData } from "@/lib/gmail";
+import { formatCurrency } from "@/lib/format";
 import { LogOut, RefreshCw, Smartphone, Plus, Mail, Trash2, Phone, X, PlayCircle, Music } from "lucide-react";
 
 export default function Dashboard() {
@@ -59,8 +60,8 @@ export default function Dashboard() {
         const data = await res.json();
         setSubscriptions(data.subscriptions);
         
-        const total = data.subscriptions.reduce((acc: number, sub: SubscriptionData) => acc + (sub.amount || 0), 0);
-        setTotalCost(total);
+        const total = data.subscriptions.reduce((acc: number, sub: SubscriptionData) => acc + (Number(sub.amount) || 0), 0);
+        setTotalCost(Math.round((total + Number.EPSILON) * 100) / 100);
 
         // Calculate Expiration Alerts
         const newAlerts: {type: "expired" | "expiring", message: string}[] = [];
@@ -308,7 +309,10 @@ export default function Dashboard() {
       <div className={styles.summaryStats}>
         <div className={`glass-card ${styles.statCard}`}>
           <h3>Total Monthly Spend</h3>
-          <p className={styles.statValue}>₹{totalCost}</p>
+          <p className={styles.statValue}>
+            <span className={styles.currencySymbol}>₹</span>
+            {formatCurrency(totalCost)}
+          </p>
         </div>
         <div className={`glass-card ${styles.statCard}`}>
           <h3>Active Subs</h3>
@@ -416,7 +420,7 @@ export default function Dashboard() {
                   </div>
                   <div className={styles.detailRow}>
                     <span>Amount</span>
-                    <span>₹{sub.amount}</span>
+                    <span>₹{formatCurrency(sub.amount)}</span>
                   </div>
                </div>
                
@@ -499,11 +503,11 @@ export default function Dashboard() {
           <div className={styles.modalContent}>
             <button className={styles.closeModalBtn} onClick={() => setRechargeModalOpen(null)}><X size={20} /></button>
             <h2>Recharge {rechargeModalOpen.serviceName}</h2>
-            <p>Amount: ₹{rechargeModalOpen.amount}</p>
+            <p>Amount: ₹{formatCurrency(rechargeModalOpen.amount)}</p>
             <div className={extrasStyles.paymentMethods}>
-               <button onClick={() => { alert(`Redirecting to Paytm to pay ₹${rechargeModalOpen.amount}...`); setRechargeModalOpen(null); }}>Pay with Paytm</button>
-               <button onClick={() => { alert(`Redirecting to UPI Gateway for ₹${rechargeModalOpen.amount}...`); setRechargeModalOpen(null); }}>Pay with UPI</button>
-               <button onClick={() => { alert(`Redirecting to Card Payment for ₹${rechargeModalOpen.amount}...`); setRechargeModalOpen(null); }}>Pay with Card</button>
+               <button onClick={() => { alert(`Redirecting to Paytm to pay ₹${formatCurrency(rechargeModalOpen.amount)}...`); setRechargeModalOpen(null); }}>Pay with Paytm</button>
+               <button onClick={() => { alert(`Redirecting to UPI Gateway for ₹${formatCurrency(rechargeModalOpen.amount)}...`); setRechargeModalOpen(null); }}>Pay with UPI</button>
+               <button onClick={() => { alert(`Redirecting to Card Payment for ₹${formatCurrency(rechargeModalOpen.amount)}...`); setRechargeModalOpen(null); }}>Pay with Card</button>
             </div>
           </div>
         </div>
@@ -526,7 +530,7 @@ export default function Dashboard() {
                <div className={extrasStyles.vastRow}>
                   <div className={extrasStyles.vastMetric}>
                      <span className={extrasStyles.metricLabel}>Monthly Cost</span>
-                     <span className={extrasStyles.metricValue}>₹{selectedSub.amount}</span>
+                     <span className={extrasStyles.metricValue}>₹{formatCurrency(selectedSub.amount)}</span>
                   </div>
                   <div className={extrasStyles.vastMetric}>
                      <span className={extrasStyles.metricLabel}>Next Billing</span>

@@ -35,7 +35,7 @@ function extractAmount(text: string): number | null {
     const match = text.match(regex);
     if (match && match[1]) {
       const parsed = parseFloat(match[1].replace(/,/g, ''));
-      if (!isNaN(parsed) && parsed > 0) return parsed;
+      if (!isNaN(parsed) && parsed > 0) return Math.round((parsed + Number.EPSILON) * 100) / 100;
     }
   }
   return null;

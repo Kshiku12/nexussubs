@@ -31,7 +31,8 @@ export async function POST(req: Request) {
       const match = text.match(amountRegex);
       
       if (match && match[1]) {
-        amount = parseFloat(match[1].replace(/,/g, ''));
+        const parsed = parseFloat(match[1].replace(/,/g, ''));
+        if (!isNaN(parsed) && parsed > 0) amount = Math.round((parsed + Number.EPSILON) * 100) / 100;
       }
 
       if (amount) {
